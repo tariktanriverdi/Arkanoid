@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3619251353
+    locked: 0
+  - name: Paddle
+    uniqueID: 3932046727
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
