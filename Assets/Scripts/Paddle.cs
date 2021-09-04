@@ -5,6 +5,21 @@ using UnityEngine;
 
 public class Paddle : MonoBehaviour
 {
+    #region Singleton
+    private static Paddle _instance;
+    public static Paddle Instance => _instance;
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+    #endregion
     private Camera mainCamera;
     private float paddleIntialY;
     private float defaultPaddleWithInPixels = 200;
@@ -42,5 +57,25 @@ public class Paddle : MonoBehaviour
         float mousePositionX = mainCamera.ScreenToWorldPoint(new Vector3(mousePositionPixels, 0, 0)).x;
         // Debug.Log("mousePositionX"+mousePositionX);
         this.transform.position = new Vector3(mousePositionX, paddleIntialY, 0);
+    }
+    private void OnCollisionEnter2D(Collision2D coll)
+    { 
+      
+        if (coll.gameObject.tag == "Ball")
+        { 
+            Rigidbody2D ballRb = coll.gameObject.GetComponent<Rigidbody2D>();
+            Vector3 hitPoint = coll.contacts[0].point;
+            Vector3 paddleCenter = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y,0);
+            ballRb.velocity = Vector2.zero;
+            float difference = paddleCenter.x - hitPoint.x;
+            if (hitPoint.x<paddleCenter.x  )
+            {
+                ballRb.AddForce(new Vector2(-(Mathf.Abs(difference * 200)), BallsManager.Instance.initialBallSpeed));
+            }
+            else
+            { 
+                ballRb.AddForce(new Vector2((Mathf.Abs(difference * 200)), BallsManager.Instance.initialBallSpeed));
+            }
+        }
     }
 }
