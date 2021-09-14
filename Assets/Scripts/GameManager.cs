@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
     {
         if (_instance != null)
         {
+
             Destroy(gameObject);
+
         }
         else
         {
@@ -20,6 +22,6 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public bool IsGameStarted {get;set;}
+    public bool IsGameStarted { get; set; }
 
 }
