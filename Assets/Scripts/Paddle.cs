@@ -68,6 +68,7 @@ public class Paddle : MonoBehaviour
             Vector3 paddleCenter = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y,0);
             ballRb.velocity = Vector2.zero;
             float difference = paddleCenter.x - hitPoint.x;
+           
             if (hitPoint.x<paddleCenter.x  )
             {
                 ballRb.AddForce(new Vector2(-(Mathf.Abs(difference * 200)), BallsManager.Instance.initialBallSpeed));

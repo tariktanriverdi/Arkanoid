@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class BricksManager : MonoBehaviour
 {
-    #region Singleton
-    private static GameManager _instance;
-    public static GameManager Instance => _instance;
+   #region Singleton
+   
+    private static BricksManager _instance;
+    public static BricksManager Instance => _instance;
     private void Awake()
     {
         if (_instance != null)
@@ -21,10 +22,8 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-
-    public bool IsGameStarted { get; set; }
-    private void Start(){
-        Screen.SetResolution(540,960,false);
-    }
-
+   public Sprite[] Sprites;
+   
 }
+
+
