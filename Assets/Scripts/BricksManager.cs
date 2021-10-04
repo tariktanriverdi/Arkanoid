@@ -39,6 +39,7 @@ public class BricksManager : MonoBehaviour
     public Color[] BricksColler;
     public float shiftAmountX=0.365F;
     public float shiftAmountY=0.365F;
+    public static event Action OnLevelLoaded;
 
     private void Start()
     {
@@ -46,6 +47,7 @@ public class BricksManager : MonoBehaviour
         
         this.LevelData = this.LoadLevelData();
         this.GenerateBricks();
+      
 
     }
 
@@ -105,7 +107,7 @@ public class BricksManager : MonoBehaviour
             curretnSpawnY-=shiftAmountY;
         }
         this.InitialBricksCount=this.RemainingBricks.Count;
-
+    OnLevelLoaded?.Invoke();
     }
 
     private List<int[,]> LoadLevelData()
