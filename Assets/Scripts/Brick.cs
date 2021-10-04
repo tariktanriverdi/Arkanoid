@@ -25,7 +25,8 @@ public class Brick : MonoBehaviour
     {
         this.hitPoint--;
         if (this.hitPoint <= 0)
-        {
+        {   
+            BricksManager.Instance.RemainingBricks.Remove(this);
             OnBrickDestruction?.Invoke(this);
             SpawnDestroyEffect();
             Destroy(this.gameObject);
@@ -33,6 +34,7 @@ public class Brick : MonoBehaviour
         else
         {
             this.sr.sprite=BricksManager.Instance.Sprites[this.hitPoint-1];
+            this.sr.color=BricksManager.Instance.BricksColler[this.hitPoint];
         }
 
 

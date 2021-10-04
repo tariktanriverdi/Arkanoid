@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BallsManager : MonoBehaviour
@@ -24,7 +26,7 @@ public class BallsManager : MonoBehaviour
     private Ball ballPrefab;
     private Ball initialBall;
     private Rigidbody2D initialBallRb;
-    private List<Ball> Balls { get; set; }
+    public List<Ball> Balls { get; set; }
     public float initialBallSpeed = 250;
     private void Start()
     {
@@ -43,6 +45,15 @@ public class BallsManager : MonoBehaviour
         initialBallRb = initialBall.GetComponent<Rigidbody2D>();
         this.Balls = new List<Ball> { initialBall };
     }
+
+    public void ResetBalls()
+    {
+       foreach(var ball in Balls.ToList()){
+           Destroy(ball.gameObject);
+       }
+       InitBall();
+    }
+
     private void SetBallPosition()
     {
         if (!GameManager.Instance.IsGameStarted)
