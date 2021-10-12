@@ -77,8 +77,9 @@ public class BallsManager : MonoBehaviour
     }
 
 
-    public void SpawnBalls(Vector3 position, int count)
-    {
+    public void SpawnBalls(Vector3 position, int count,bool isLigthiningBall)
+    {   
+
         for (int i = 0; i < count; i++)
         {
             Ball spawnedBall = Instantiate(ballPrefab, position, Quaternion.identity) as Ball;
@@ -86,7 +87,7 @@ public class BallsManager : MonoBehaviour
             spawnedBallRb.isKinematic = false;
             spawnedBallRb.AddForce(new Vector2(0, initialBallSpeed));
            // spawnedBall.transform.Find("Graphic").GetComponent<SpriteRenderer>().color = Color.blue;
-
+            spawnedBall.StartLightning();
             this.Balls.Add(spawnedBall);
 
         }

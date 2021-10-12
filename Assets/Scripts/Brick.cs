@@ -10,10 +10,29 @@ public class Brick : MonoBehaviour
     public static event Action<Brick> OnBrickDestruction;
     public ParticleSystem DestroyEffect;
     private SpriteRenderer sr;
+    private BoxCollider2D boxCollider;
     private void Awake()
     {
         this.sr = this.gameObject.GetComponent<SpriteRenderer>();
+       this.boxCollider=this.GetComponent<BoxCollider2D>();
 
+       Ball.OnLightningBallEnable+=OnLightningBallEnable;
+       Ball.OnLightningBallDisable+=OnLightningBallDisable;
+    }
+
+    private void OnLightningBallEnable(Ball obj)
+    {
+        if(this!=null)
+        {
+            this.boxCollider.isTrigger=true;
+        }
+    }
+    private void OnLightningBallDisable(Ball obj)
+    {
+        if(this!=null)
+        {
+            this.boxCollider.isTrigger=false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -22,10 +41,14 @@ public class Brick : MonoBehaviour
         Ball ball = collision.gameObject.GetComponent<Ball>();
         ApplyCollisionLogic(ball);
     }
+    private  void OnTriggerEnter2D(Collider2D collision) {
+        Ball ball = collision.gameObject.GetComponent<Ball>();
+        ApplyCollisionLogic(ball);
+    }
     private void ApplyCollisionLogic(Ball ball)
     {
         this.hitPoint--;
-        if (this.hitPoint <= 0)
+        if (this.hitPoint <= 0 ||(ball!=null && ball.isLigthiningBall) )
         {
             BricksManager.Instance.RemainingBricks.Remove(this);
             OnBrickDestruction?.Invoke(this);
@@ -95,5 +118,9 @@ public class Brick : MonoBehaviour
         this.hitPoint = hitPoint;
 
 
+    }
+    private void OnDisable() {
+       Ball.OnLightningBallEnable-=OnLightningBallEnable;
+       Ball.OnLightningBallDisable-=OnLightningBallDisable;
     }
 }
